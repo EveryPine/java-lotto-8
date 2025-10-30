@@ -6,6 +6,9 @@ import lotto.dto.CreateWinningStatisticsResponse;
 import lotto.dto.IssueLottoResponse;
 
 import java.text.DecimalFormat;
+import java.util.List;
+
+import static lotto.domain.LottoRank.*;
 
 public class OutputView {
 
@@ -29,10 +32,11 @@ public class OutputView {
     }
 
     public static void printWinningStatistics(CreateWinningStatisticsResponse response) {
-        DecimalFormat prizeFormat = new DecimalFormat("###,###");
+        final DecimalFormat prizeFormat = new DecimalFormat("###,###");
+        final List<LottoRank> printOrder = List.of(FIFTH, FOURTH, THIRD, SECOND, FIRST);
 
         System.out.println("\n당첨 통계\n---");
-        for (LottoRank lottoRank: LottoRank.values()) {
+        for (LottoRank lottoRank: printOrder) {
             String matchingGuide = String.format("%d개 일치", lottoRank.getRequiredMatchCount());
             if (lottoRank.requireBonusNumberMatch()) {
                 matchingGuide += ", 보너스 볼 일치";
