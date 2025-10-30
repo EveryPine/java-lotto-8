@@ -17,18 +17,6 @@ public class CreateWinningStatisticsRequest {
         this.bonusNumber = bonusNumber;
     }
 
-    public List<Lotto> getIssuedLottos() {
-        return List.copyOf(issuedLottos);
-    }
-
-    public List<Integer> getWinningNumbers() {
-        return winningNumbers;
-    }
-
-    public int getBonusNumber() {
-        return bonusNumber;
-    }
-
     public WinningStatistics toEntity() {
         return new WinningStatistics(issuedLottos, winningNumbers, bonusNumber);
     }
