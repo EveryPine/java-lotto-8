@@ -1,5 +1,8 @@
 package lotto.service;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ValidationService {
 
     private final int PURCHASE_AMOUNT_UNIT = 1000;
@@ -22,6 +25,32 @@ public class ValidationService {
         if (purchaseAmount % PURCHASE_AMOUNT_UNIT != 0) {
             throw new IllegalArgumentException(String.format("[ERROR] 로또 구입 금액은 %d 단위의 정수여야 합니다.",
                     PURCHASE_AMOUNT_UNIT));
+        }
+    }
+
+    public void validateWinningNumbers(String input) {
+        final String delimiter = ",";
+        List<Integer> winningNumbers;
+
+        if (!input.contains(delimiter)) {
+            throw new IllegalArgumentException(String.format("[ERROR] 당첨 번호는 \"%s\"로 구분되어야 합니다.",
+                    delimiter));
+        }
+
+        try {
+            winningNumbers = Arrays.stream(input.split(delimiter))
+                    .map(Integer::parseInt)
+                    .toList();
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 각 당첨 번호는 정수로 이루어져야 합니다.");
+        }
+    }
+
+    public void validateBonusNumber(String input) {
+        try {
+            int bonusNumber =  Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("[ERROR] 보너스 번호는 정수여야 합니다.");
         }
     }
 }

@@ -72,4 +72,39 @@ class ValidationServiceTest {
         assertThatThrownBy(() -> validationService.validatePurchaseAmount(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void 당첨_번호_검증_테스트() {
+        // given
+        String input = "1,2,3,4,5,6";
+
+        // when
+
+        // then
+        assertDoesNotThrow(() -> validationService.validateWinningNumbers(input));
+    }
+
+    @Test
+    void 당첨_번호_구분자가_쉼표가_아니라면_예외가_발생한다() {
+        // given
+        String input = "1;2;3;4;5;6";
+
+        // when
+
+        // then
+        assertThatThrownBy(() -> validationService.validateWinningNumbers(input))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 당첨_번호가_숫자가_아니라면_예외가_발생한다() {
+        // given
+        String input = "1,2,3,a,5,6";
+
+        // when
+
+        // then
+        assertThatThrownBy(() -> validationService.validateWinningNumbers(input))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }

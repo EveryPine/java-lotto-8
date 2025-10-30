@@ -17,4 +17,12 @@ public class OutputView {
             System.out.println(lotto.getNumbers());
         }
     }
+
+    public static void printWinningNumbersGuide() {
+        System.out.println("당첨 번호를 입력해 주세요.");
+    }
+
+    public static void printBonusNumberGuide() {
+        System.out.println("보너스 번호를 입력해 주세요.");
+    }
 }
