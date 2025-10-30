@@ -3,6 +3,9 @@ package lotto.service;
 import camp.nextstep.edu.missionutils.Randoms;
 import lotto.domain.IssuedLottos;
 import lotto.domain.Lotto;
+import lotto.domain.WinningStatistics;
+import lotto.dto.CreateWinningStatisticsRequest;
+import lotto.dto.CreateWinningStatisticsResponse;
 import lotto.dto.IssueLottoRequest;
 import lotto.dto.IssueLottoResponse;
 
@@ -26,5 +29,13 @@ public class LottoService {
         }
 
         return IssueLottoResponse.from(issuedLottos);
+    }
+
+    public CreateWinningStatisticsResponse createWinningStatistics(CreateWinningStatisticsRequest request) {
+        WinningStatistics winningStatistics = request.toEntity();
+        winningStatistics.calculateWinningCounts();
+        winningStatistics.calculateReturnRate();
+
+        return CreateWinningStatisticsResponse.from(winningStatistics);
     }
 }

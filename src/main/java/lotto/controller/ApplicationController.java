@@ -1,11 +1,17 @@
 package lotto.controller;
 
+import lotto.domain.Lotto;
+import lotto.dto.CreateWinningStatisticsRequest;
+import lotto.dto.CreateWinningStatisticsResponse;
 import lotto.dto.IssueLottoRequest;
 import lotto.dto.IssueLottoResponse;
+import lotto.parser.WinningNumbersParser;
 import lotto.service.LottoService;
 import lotto.service.ValidationService;
 import lotto.view.InputView;
 import lotto.view.OutputView;
+
+import java.util.List;
 
 public class ApplicationController {
 
@@ -35,5 +41,16 @@ public class ApplicationController {
         OutputView.printBonusNumberGuide();
         String bonusNumberInput = InputView.validInput();
         validationService.validateBonusNumber(bonusNumberInput);
+
+        // TODO 4: 당첨 통계를 출력한다
+        List<Lotto> issuedLottos = issueLottoResponse.getLottos();
+        List<Integer> winningNumbers = WinningNumbersParser.parse(winningNumbersInput);
+        int bonusNumber = Integer.parseInt(bonusNumberInput);
+        CreateWinningStatisticsRequest createWinningStatisticsRequest =
+                new CreateWinningStatisticsRequest(issuedLottos, winningNumbers, bonusNumber);
+        CreateWinningStatisticsResponse createWinningStatisticsResponse =
+                lottoService.createWinningStatistics(createWinningStatisticsRequest);
+        OutputView.printWinningStatistics(createWinningStatisticsResponse);
+
     }
 }
