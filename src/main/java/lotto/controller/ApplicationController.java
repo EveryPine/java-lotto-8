@@ -25,6 +25,26 @@ public class ApplicationController {
 
     public void run() {
         // TODO 1: 로또 구입 금액을 입력받는다
+        String purchaseAmountInput = inputPurchaseAmount();
+
+        // TODO 2: 로또 번호를 발행하고, 그 결과를 출력한다
+        IssueLottoResponse issueLottoResponse = issueLottos(purchaseAmountInput);
+        printIssuedLottos(issueLottoResponse);
+
+        // TODO 3: 보너스 번호가 포함된 당첨 번호를 입력받는다
+        String winningNumbersInput = inputWinningNumbers();
+        String bonusNumberInput = inputBonusNumber();
+
+        // TODO 4: 당첨 통계를 생성하고, 그 결과를 출력한다
+        CreateWinningStatisticsResponse createWinningStatisticsResponse =
+                createWinningStatistics(
+                        issueLottoResponse.getLottos(),
+                        WinningNumbersParser.parse(winningNumbersInput),
+                        Integer.parseInt(bonusNumberInput));
+        printWinningStatistics(createWinningStatisticsResponse);
+    }
+
+    private String inputPurchaseAmount() {
         OutputView.printPurchaseAmountGuide();
         String purchaseAmountInput;
         while (true) {
@@ -37,12 +57,20 @@ public class ApplicationController {
             }
         }
 
-        // TODO 2: 로또 번호를 발행한다
-        IssueLottoRequest issueLottoRequest = new IssueLottoRequest(Integer.parseInt(purchaseAmountInput));
-        IssueLottoResponse issueLottoResponse = lottoService.issueLotto(issueLottoRequest);
-        OutputView.printIssuedLottos(issueLottoResponse);
+        return purchaseAmountInput;
+    }
 
-        // TODO 3: 보너스 번호가 포함된 당첨 번호를 입력받는다
+    private IssueLottoResponse issueLottos(String purchaseAmountInput) {
+        IssueLottoRequest issueLottoRequest = new IssueLottoRequest(Integer.parseInt(purchaseAmountInput));
+
+        return lottoService.issueLotto(issueLottoRequest);
+    }
+
+    private void printIssuedLottos(IssueLottoResponse response) {
+        OutputView.printIssuedLottos(response);
+    }
+
+    private String inputWinningNumbers() {
         OutputView.printWinningNumbersGuide();
         String winningNumbersInput;
         while (true) {
@@ -55,6 +83,10 @@ public class ApplicationController {
             }
         }
 
+        return winningNumbersInput;
+    }
+
+    private String inputBonusNumber() {
         OutputView.printBonusNumberGuide();
         String bonusNumberInput;
         while (true) {
@@ -67,15 +99,19 @@ public class ApplicationController {
             }
         }
 
-        // TODO 4: 당첨 통계를 출력한다
-        List<Lotto> issuedLottos = issueLottoResponse.getLottos();
-        List<Integer> winningNumbers = WinningNumbersParser.parse(winningNumbersInput);
-        int bonusNumber = Integer.parseInt(bonusNumberInput);
+        return bonusNumberInput;
+    }
+
+    private CreateWinningStatisticsResponse createWinningStatistics(
+            List<Lotto> issuedLottos, List<Integer> winningNumbers, int bonusNumber
+    ) {
         CreateWinningStatisticsRequest createWinningStatisticsRequest =
                 new CreateWinningStatisticsRequest(issuedLottos, winningNumbers, bonusNumber);
-        CreateWinningStatisticsResponse createWinningStatisticsResponse =
-                lottoService.createWinningStatistics(createWinningStatisticsRequest);
-        OutputView.printWinningStatistics(createWinningStatisticsResponse);
 
+        return lottoService.createWinningStatistics(createWinningStatisticsRequest);
+    }
+
+    private void printWinningStatistics(CreateWinningStatisticsResponse response) {
+        OutputView.printWinningStatistics(response);
     }
 }
