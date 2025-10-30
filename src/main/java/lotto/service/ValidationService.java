@@ -3,11 +3,9 @@ package lotto.service;
 import java.util.Arrays;
 import java.util.List;
 
-public class ValidationService {
+import static lotto.domain.Constants.*;
 
-    private final int PURCHASE_AMOUNT_UNIT = 1000;
-    private final int MIN_PURCHASE_AMOUNT = 1000;
-    private final int MAX_PURCHASE_AMOUNT = 100000000;
+public class ValidationService {
 
     public void validatePurchaseAmount(String input) {
         int purchaseAmount;
@@ -22,9 +20,9 @@ public class ValidationService {
                     MIN_PURCHASE_AMOUNT, MAX_PURCHASE_AMOUNT));
         }
 
-        if (purchaseAmount % PURCHASE_AMOUNT_UNIT != 0) {
+        if (purchaseAmount % LOTTO_PRICE != 0) {
             throw new IllegalArgumentException(String.format("[ERROR] 로또 구입 금액은 %d 단위의 정수여야 합니다.",
-                    PURCHASE_AMOUNT_UNIT));
+                    LOTTO_PRICE));
         }
     }
 

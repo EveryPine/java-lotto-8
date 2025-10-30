@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static lotto.domain.Constants.LOTTO_PRICE;
+
 public class WinningStatistics {
 
-    private static final int LOTTO_PRICE = 1000;
 
     private final List<Lotto> issuedLottos;
     private final List<Integer> winningNumbers;

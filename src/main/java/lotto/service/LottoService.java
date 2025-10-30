@@ -12,11 +12,9 @@ import lotto.dto.IssueLottoResponse;
 import java.util.Collections;
 import java.util.List;
 
-public class LottoService {
+import static lotto.domain.Constants.*;
 
-    private final int MIN_LOTTO_NUMBER = 1;
-    private final int MAX_LOTTO_NUMBER = 45;
-    private final int LOTTO_NUMBER_COUNT = 6;
+public class LottoService {
 
     public IssueLottoResponse issueLotto(IssueLottoRequest request) {
         IssuedLottos issuedLottos = request.toEntity();

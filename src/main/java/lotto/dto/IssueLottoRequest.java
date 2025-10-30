@@ -2,9 +2,9 @@ package lotto.dto;
 
 import lotto.domain.IssuedLottos;
 
-public class IssueLottoRequest {
+import static lotto.domain.Constants.LOTTO_PRICE;
 
-    private final int PURCHASE_AMOUNT_UNIT = 1000;
+public class IssueLottoRequest {
 
     private final int purchaseAmount;
 
@@ -13,6 +13,6 @@ public class IssueLottoRequest {
     }
 
     public IssuedLottos toEntity() {
-        return new IssuedLottos(purchaseAmount / PURCHASE_AMOUNT_UNIT);
+        return new IssuedLottos(purchaseAmount / LOTTO_PRICE);
     }
 }
