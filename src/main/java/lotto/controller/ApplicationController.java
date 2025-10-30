@@ -26,8 +26,16 @@ public class ApplicationController {
     public void run() {
         // TODO 1: 로또 구입 금액을 입력받는다
         OutputView.printPurchaseAmountGuide();
-        String purchaseAmountInput = InputView.validInput();
-        validationService.validatePurchaseAmount(purchaseAmountInput);
+        String purchaseAmountInput;
+        while (true) {
+            try {
+                purchaseAmountInput = InputView.validInput();
+                validationService.validatePurchaseAmount(purchaseAmountInput);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
 
         // TODO 2: 로또 번호를 발행한다
         IssueLottoRequest issueLottoRequest = new IssueLottoRequest(Integer.parseInt(purchaseAmountInput));
@@ -36,11 +44,28 @@ public class ApplicationController {
 
         // TODO 3: 보너스 번호가 포함된 당첨 번호를 입력받는다
         OutputView.printWinningNumbersGuide();
-        String winningNumbersInput = InputView.validInput();
-        validationService.validateWinningNumbers(winningNumbersInput);
+        String winningNumbersInput;
+        while (true) {
+            try {
+                winningNumbersInput = InputView.validInput();
+                validationService.validateWinningNumbers(winningNumbersInput);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
+
         OutputView.printBonusNumberGuide();
-        String bonusNumberInput = InputView.validInput();
-        validationService.validateBonusNumber(bonusNumberInput);
+        String bonusNumberInput;
+        while (true) {
+            try {
+                bonusNumberInput = InputView.validInput();
+                validationService.validateBonusNumber(bonusNumberInput);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
 
         // TODO 4: 당첨 통계를 출력한다
         List<Lotto> issuedLottos = issueLottoResponse.getLottos();

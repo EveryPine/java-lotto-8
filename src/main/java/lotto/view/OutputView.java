@@ -12,6 +12,10 @@ import static lotto.domain.LottoRank.*;
 
 public class OutputView {
 
+    public static void printErrorMessage(String message) {
+        System.out.println(message);
+    }
+
     public static void printPurchaseAmountGuide() {
         System.out.println("구입금액을 입력해 주세요.");
     }
