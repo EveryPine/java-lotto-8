@@ -8,14 +8,13 @@ import static lotto.domain.Constants.LOTTO_PRICE;
 
 public class WinningStatistics {
 
-
     private final List<Lotto> issuedLottos;
-    private final List<Integer> winningNumbers;
-    private final int bonusNumber;
+    private final Lotto winningNumbers;
+    private final BonusNumber bonusNumber;
     private final Map<LottoRank, Integer> winningCounts;
     private double returnRate;
 
-    public WinningStatistics(List<Lotto> issuedLottos, List<Integer> winningNumbers, int bonusNumber) {
+    public WinningStatistics(List<Lotto> issuedLottos, Lotto winningNumbers, BonusNumber bonusNumber) {
         this.issuedLottos = issuedLottos;
         this.winningNumbers = winningNumbers;
         this.bonusNumber = bonusNumber;
@@ -39,7 +38,7 @@ public class WinningStatistics {
     }
 
     public void calculateReturnRate() {
-        int scale = 10;
+        final long scale = 10;
         long expenses = (long) LOTTO_PRICE * issuedLottos.size();
         long income = 0;
 
@@ -78,7 +77,7 @@ public class WinningStatistics {
         int matchCount = 0;
 
         for (int number: lotto.getNumbers()) {
-            if (winningNumbers.contains(number)) {
+            if (winningNumbers.getNumbers().contains(number)) {
                 matchCount++;
             }
         }

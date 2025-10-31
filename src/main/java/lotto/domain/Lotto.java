@@ -2,6 +2,9 @@ package lotto.domain;
 
 import java.util.List;
 
+import static lotto.domain.Constants.MAX_LOTTO_NUMBER;
+import static lotto.domain.Constants.MIN_LOTTO_NUMBER;
+
 public class Lotto {
     private final List<Integer> numbers;
 
@@ -11,7 +14,7 @@ public class Lotto {
     }
 
     public List<Integer> getNumbers() {
-        return List.copyOf(numbers);
+        return numbers;
     }
 
     private void validate(List<Integer> numbers) {
@@ -21,6 +24,13 @@ public class Lotto {
 
         if (numbers.stream().distinct().count() != numbers.size()) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 서로 중복될 수 없습니다.");
+        }
+
+        for (int number: numbers) {
+            if (number < MIN_LOTTO_NUMBER || number > MAX_LOTTO_NUMBER) {
+                throw new IllegalArgumentException(String.format("[ERROR] 로또 번호는 %d부터 %d 사이의 숫자여야 합니다.",
+                        MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER));
+            }
         }
     }
 }

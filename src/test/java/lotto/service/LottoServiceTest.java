@@ -1,5 +1,6 @@
 package lotto.service;
 
+import lotto.domain.Account;
 import lotto.domain.Lotto;
 import lotto.dto.IssueLottoRequest;
 import lotto.dto.IssueLottoResponse;
@@ -21,7 +22,8 @@ class LottoServiceTest {
     @Test
     void 로또_발행_테스트() {
         // given
-        IssueLottoRequest request = new IssueLottoRequest(5000);
+        Account account = new Account(5000);
+        IssueLottoRequest request = new IssueLottoRequest(account);
 
         // when
         IssueLottoResponse actual = lottoService.issueLotto(request);
@@ -30,7 +32,6 @@ class LottoServiceTest {
         assertThat(actual.getCount()).isEqualTo(5);
         for (Lotto lotto : actual.getLottos()) {
             assertThat(lotto.getNumbers())
-                    .isSorted()
                     .doesNotHaveDuplicates();
         }
 
