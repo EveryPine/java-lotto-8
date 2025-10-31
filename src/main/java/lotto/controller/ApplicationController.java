@@ -24,15 +24,15 @@ public class ApplicationController {
 
     public void run() {
         // TODO 1: 로또 구입 금액을 입력받는다
-        Account account = getAccount();
+        Account account = inputAccount();
 
         // TODO 2: 로또 번호를 발행하고, 그 결과를 출력한다
         IssueLottoResponse issueLottoResponse = issueLottos(account);
         printIssuedLottos(issueLottoResponse);
 
         // TODO 3: 보너스 번호가 포함된 당첨 번호를 입력받는다
-        Lotto winningLotto = getWinningLotto();
-        int bonusNumber = getBonusNumber();
+        Lotto winningLotto = inputWinningLotto();
+        int bonusNumber = inputBonusNumber();
         WinningNumbers winningNumbers = new WinningNumbers(winningLotto, bonusNumber);
 
         // TODO 4: 당첨 통계를 생성하고, 그 결과를 출력한다
@@ -43,7 +43,7 @@ public class ApplicationController {
         printWinningStatistics(createWinningStatisticsResponse);
     }
 
-    private Account getAccount() {
+    private Account inputAccount() {
         Account account;
 
         OutputView.printPurchaseAmountGuide();
@@ -72,7 +72,7 @@ public class ApplicationController {
         OutputView.printIssuedLottos(response);
     }
 
-    private Lotto getWinningLotto() {
+    private Lotto inputWinningLotto() {
         Lotto winningLotto;
 
         OutputView.printWinningNumbersGuide();
@@ -95,7 +95,7 @@ public class ApplicationController {
         return winningLotto;
     }
 
-    private int getBonusNumber() {
+    private int inputBonusNumber() {
         int bonusNumber;
 
         OutputView.printBonusNumberGuide();
