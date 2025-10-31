@@ -1,8 +1,8 @@
 package lotto.controller;
 
 import lotto.domain.Account;
-import lotto.domain.BonusNumber;
 import lotto.domain.Lotto;
+import lotto.domain.WinningNumbers;
 import lotto.dto.CreateWinningStatisticsRequest;
 import lotto.dto.CreateWinningStatisticsResponse;
 import lotto.dto.IssueLottoRequest;
@@ -31,15 +31,15 @@ public class ApplicationController {
         printIssuedLottos(issueLottoResponse);
 
         // TODO 3: 보너스 번호가 포함된 당첨 번호를 입력받는다
-        Lotto winningNumbers = getWinningNumbers();
-        BonusNumber bonusNumber = getBonusNumber();
+        Lotto winningLotto = getWinningLotto();
+        int bonusNumber = getBonusNumber();
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, bonusNumber);
 
         // TODO 4: 당첨 통계를 생성하고, 그 결과를 출력한다
         CreateWinningStatisticsResponse createWinningStatisticsResponse =
                 createWinningStatistics(
                         issueLottoResponse.getLottos(),
-                        winningNumbers,
-                        bonusNumber);
+                        winningNumbers);
         printWinningStatistics(createWinningStatisticsResponse);
     }
 
@@ -72,15 +72,15 @@ public class ApplicationController {
         OutputView.printIssuedLottos(response);
     }
 
-    private Lotto getWinningNumbers() {
-        Lotto winningNumbers;
+    private Lotto getWinningLotto() {
+        Lotto winningLotto;
 
         OutputView.printWinningNumbersGuide();
         while (true) {
             try {
                 String winningNumbersInput = InputView.validInput();
                 List<String> parsed =  WinningNumbersParser.parse(winningNumbersInput);
-                winningNumbers = new Lotto(parsed.stream()
+                winningLotto = new Lotto(parsed.stream()
                         .mapToInt(Integer::parseInt)
                         .boxed()
                         .toList());
@@ -92,17 +92,17 @@ public class ApplicationController {
             }
         }
 
-        return winningNumbers;
+        return winningLotto;
     }
 
-    private BonusNumber getBonusNumber() {
-        BonusNumber bonusNumber;
+    private int getBonusNumber() {
+        int bonusNumber;
 
         OutputView.printBonusNumberGuide();
         while (true) {
             try {
                 String bonusNumberInput = InputView.validInput();
-                bonusNumber = new BonusNumber(Integer.parseInt(bonusNumberInput));
+                bonusNumber = Integer.parseInt(bonusNumberInput);
                 break;
             } catch (NumberFormatException e) {
                 throw new IllegalArgumentException("[ERROR] 보너스 번호는 숫자여야 합니다.");
@@ -115,10 +115,10 @@ public class ApplicationController {
     }
 
     private CreateWinningStatisticsResponse createWinningStatistics(
-            List<Lotto> issuedLottos, Lotto winningNumbers, BonusNumber bonusNumber
+            List<Lotto> issuedLottos, WinningNumbers winningNumbers
     ) {
         CreateWinningStatisticsRequest createWinningStatisticsRequest =
-                new CreateWinningStatisticsRequest(issuedLottos, winningNumbers, bonusNumber);
+                new CreateWinningStatisticsRequest(issuedLottos, winningNumbers);
 
         return lottoService.createWinningStatistics(createWinningStatisticsRequest);
     }

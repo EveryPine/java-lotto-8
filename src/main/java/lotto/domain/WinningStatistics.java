@@ -10,15 +10,13 @@ import static lotto.domain.LottoRank.*;
 public class WinningStatistics {
 
     private final List<Lotto> issuedLottos;
-    private final Lotto winningNumbers;
-    private final BonusNumber bonusNumber;
+    private final WinningNumbers winningNumbers;
     private final Map<LottoRank, Integer> winningCounts;
     private double returnRate;
 
-    public WinningStatistics(List<Lotto> issuedLottos, Lotto winningNumbers, BonusNumber bonusNumber) {
+    public WinningStatistics(List<Lotto> issuedLottos, WinningNumbers winningNumbers) {
         this.issuedLottos = issuedLottos;
         this.winningNumbers = winningNumbers;
-        this.bonusNumber = bonusNumber;
         this.winningCounts = new HashMap<>();
         this.returnRate = 0.0;
         initWinningCounts();
@@ -73,9 +71,10 @@ public class WinningStatistics {
 
     private boolean satisfiesMatchCountCondition(Lotto lotto, LottoRank lottoRank) {
         int matchCount = 0;
+        Lotto winningLotto = winningNumbers.getWinningLotto();
 
         for (int number: lotto.getNumbers()) {
-            if (winningNumbers.getNumbers().contains(number)) {
+            if (winningLotto.getNumbers().contains(number)) {
                 matchCount++;
             }
         }
@@ -93,7 +92,7 @@ public class WinningStatistics {
         }
 
         for (int number: lotto.getNumbers()) {
-            if (number == bonusNumber.getNumber()) {
+            if (number == winningNumbers.getBonusNumber()) {
                 return true;
             }
         }

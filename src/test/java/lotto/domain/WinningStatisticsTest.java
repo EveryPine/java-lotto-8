@@ -24,11 +24,11 @@ class WinningStatisticsTest {
                 new Lotto(List.of(2, 13, 22, 32, 38, 45)),
                 new Lotto(List.of(1, 3, 5, 14, 22, 45))
         );
-        Lotto winningNumbers = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        BonusNumber bonusNumber = new BonusNumber(7);
+        Lotto winningLotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, 7);
 
         // when
-        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers, bonusNumber);
+        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers);
 
         // then
         assertThat(actual.getWinningCounts().get(FIRST)).isEqualTo(0);
@@ -46,8 +46,8 @@ class WinningStatisticsTest {
         List<Lotto> issuedLottos = List.of(
                 new Lotto(List.of(1, 3, 5, 14, 22, 45))
         );
-        Lotto winningNumbers = new Lotto(List.of(1, 3, 5, 14, 22, 45));
-        BonusNumber bonusNumber = new BonusNumber(7);
+        Lotto winningLotto = new Lotto(List.of(1, 3, 5, 14, 22, 45));
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, 7);
         Map<LottoRank, Integer> expected = Map.of(
                 FIRST, 1,
                 SECOND, 0,
@@ -58,7 +58,7 @@ class WinningStatisticsTest {
         );
 
         // when
-        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers, bonusNumber);
+        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers);
 
         // then
         assertThat(actual).extracting("winningCounts")
@@ -72,8 +72,8 @@ class WinningStatisticsTest {
         List<Lotto> issuedLottos = List.of(
                 new Lotto(List.of(1, 3, 5, 14, 22, 45))
         );
-        Lotto winningNumbers = new Lotto(List.of(1, 3, 5, 14, 22, 44));
-        BonusNumber bonusNumber = new BonusNumber(45);
+        Lotto winningLotto = new Lotto(List.of(1, 3, 5, 14, 22, 44));
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, 45);
         Map<LottoRank, Integer> expected = Map.of(
                 FIRST, 0,
                 SECOND, 1,
@@ -84,7 +84,7 @@ class WinningStatisticsTest {
         );
 
         // when
-        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers, bonusNumber);
+        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers);
 
         // then
         assertThat(actual).extracting("winningCounts")
@@ -98,8 +98,8 @@ class WinningStatisticsTest {
         List<Lotto> issuedLottos = List.of(
                 new Lotto(List.of(1, 3, 5, 14, 22, 45))
         );
-        Lotto winningNumbers = new Lotto(List.of(1, 3, 5, 14, 22, 44));
-        BonusNumber bonusNumber = new BonusNumber(40);
+        Lotto winningLotto = new Lotto(List.of(1, 3, 5, 14, 22, 44));
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, 40);
         Map<LottoRank, Integer> expected = Map.of(
                 FIRST, 0,
                 SECOND, 0,
@@ -110,7 +110,7 @@ class WinningStatisticsTest {
         );
 
         // when
-        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers, bonusNumber);
+        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers);
 
         // then
         assertThat(actual).extracting("winningCounts")
@@ -124,8 +124,8 @@ class WinningStatisticsTest {
         List<Lotto> issuedLottos = List.of(
                 new Lotto(List.of(1, 3, 5, 14, 22, 45))
         );
-        Lotto winningNumbers = new Lotto(List.of(1, 3, 5, 14, 23, 44));
-        BonusNumber bonusNumber = new BonusNumber(40);
+        Lotto winningLotto = new Lotto(List.of(1, 3, 5, 14, 23, 44));
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, 40);
         Map<LottoRank, Integer> expected = Map.of(
                 FIRST, 0,
                 SECOND, 0,
@@ -136,7 +136,7 @@ class WinningStatisticsTest {
         );
 
         // when
-        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers, bonusNumber);
+        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers);
 
         // then
         assertThat(actual).extracting("winningCounts")
@@ -150,8 +150,8 @@ class WinningStatisticsTest {
         List<Lotto> issuedLottos = List.of(
                 new Lotto(List.of(1, 3, 5, 14, 22, 45))
         );
-        Lotto winningNumbers = new Lotto(List.of(1, 3, 5, 13, 23, 44));
-        BonusNumber bonusNumber = new BonusNumber(40);
+        Lotto winningLotto = new Lotto(List.of(1, 3, 5, 13, 23, 44));
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, 40);
         Map<LottoRank, Integer> expected = Map.of(
                 FIRST, 0,
                 SECOND, 0,
@@ -162,7 +162,7 @@ class WinningStatisticsTest {
         );
 
         // when
-        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers, bonusNumber);
+        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers);
 
         // then
         assertThat(actual).extracting("winningCounts")
@@ -183,12 +183,12 @@ class WinningStatisticsTest {
                 new Lotto(List.of(2, 13, 22, 32, 38, 45)),
                 new Lotto( List.of(1, 3, 5, 14, 22, 45))
         );
-        Lotto winningNumbers = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        BonusNumber bonusNumber = new BonusNumber(7);
+        Lotto winningLotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
+        WinningNumbers winningNumbers =  new WinningNumbers(winningLotto, 7);
         double expected = 62.5;
 
         // when
-        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers, bonusNumber);
+        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers);
 
         // then
         assertThat(actual).extracting("returnRate")
