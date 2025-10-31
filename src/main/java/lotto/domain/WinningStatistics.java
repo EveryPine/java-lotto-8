@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import static lotto.domain.Constants.LOTTO_PRICE;
+import static lotto.domain.LottoRank.*;
 
 public class WinningStatistics {
 
@@ -35,7 +36,11 @@ public class WinningStatistics {
     private void initWinningCounts() {
         for (LottoRank lottoRank : LottoRank.values()) {
             winningCounts.put(lottoRank, 0);
-            updateWinningCounts(lottoRank);
+        }
+
+        for (Lotto lotto : issuedLottos) {
+            LottoRank lottoRank = calculateLottoRank(lotto);
+            winningCounts.put(lottoRank, winningCounts.get(lottoRank) + 1);
         }
     }
 
@@ -51,31 +56,22 @@ public class WinningStatistics {
         returnRate = Math.round((float) income / expenses * 100 * scale) / (double) scale;
     }
 
-    private void updateWinningCounts(LottoRank lottoRank) {
-        for (Lotto lotto : issuedLottos) {
-            if (isSatisfied(lotto, lottoRank)) {
-                winningCounts.put(lottoRank, winningCounts.get(lottoRank) + 1);
+    private LottoRank calculateLottoRank(Lotto lotto) {
+        LottoRank resultRank = LottoRank.LOSE;
+        List<LottoRank> lottoRankOrder = List.of(FIRST, SECOND, THIRD, FOURTH, FIFTH);
+
+        for (LottoRank lottoRank : lottoRankOrder) {
+            if (satisfiesMatchCountCondition(lotto, lottoRank) &&
+                    satisfiesBonusNumberCondition(lotto, lottoRank)) {
+                resultRank = lottoRank;
+                break;
             }
         }
+
+        return resultRank;
     }
 
-    private boolean isSatisfied(Lotto lotto, LottoRank lottoRank) {
-        int matchCount = getMatchCount(lotto);
-        boolean satisfied = true;
-        boolean bonusNumberMatch = lottoRank.requireBonusNumberMatch();
-
-        if (matchCount != lottoRank.getRequiredMatchCount()) {
-            satisfied = false;
-        }
-
-        if (bonusNumberMatch && !containsBonusNumber(lotto)) {
-            satisfied = false;
-        }
-
-        return satisfied;
-    }
-
-    private int getMatchCount(Lotto lotto) {
+    private boolean satisfiesMatchCountCondition(Lotto lotto, LottoRank lottoRank) {
         int matchCount = 0;
 
         for (int number: lotto.getNumbers()) {
@@ -84,10 +80,24 @@ public class WinningStatistics {
             }
         }
 
-        return matchCount;
+        if (matchCount != lottoRank.getRequiredMatchCount()) {
+            return false;
+        }
+
+        return true;
     }
 
-    private boolean containsBonusNumber(Lotto lotto) {
-        return lotto.getNumbers().contains(bonusNumber.getNumber());
+    private boolean satisfiesBonusNumberCondition(Lotto lotto, LottoRank lottoRank) {
+        if (!lottoRank.requireBonusNumberMatch()) {
+            return true;
+        }
+
+        for (int number: lotto.getNumbers()) {
+            if (number == bonusNumber.getNumber()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
