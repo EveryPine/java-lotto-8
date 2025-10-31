@@ -24,10 +24,7 @@ public class OutputView {
     public static void printIssuedLottos(IssueLottoResponse response) {
         System.out.printf("%n%d개를 구매했습니다.%n", response.getCount());
         for (Lotto lotto: response.getLottos()) {
-            List<Integer> sortedNumbers = lotto.getNumbers().stream()
-                    .sorted()
-                    .toList();
-            System.out.println(sortedNumbers);
+            System.out.println(lotto.getNumbers());
         }
     }
 

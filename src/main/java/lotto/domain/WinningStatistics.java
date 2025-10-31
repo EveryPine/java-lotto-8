@@ -20,6 +20,8 @@ public class WinningStatistics {
         this.bonusNumber = bonusNumber;
         this.winningCounts = new HashMap<>();
         this.returnRate = 0.0;
+        initWinningCounts();
+        initReturnRate();
     }
 
     public Map<LottoRank, Integer> getWinningCounts() {
@@ -30,14 +32,14 @@ public class WinningStatistics {
         return returnRate;
     }
 
-    public void calculateWinningCounts() {
+    private void initWinningCounts() {
         for (LottoRank lottoRank : LottoRank.values()) {
             winningCounts.put(lottoRank, 0);
             updateWinningCounts(lottoRank);
         }
     }
 
-    public void calculateReturnRate() {
+    private void initReturnRate() {
         final long scale = 10;
         long expenses = (long) LOTTO_PRICE * issuedLottos.size();
         long income = 0;
@@ -86,6 +88,6 @@ public class WinningStatistics {
     }
 
     private boolean containsBonusNumber(Lotto lotto) {
-        return lotto.getNumbers().contains(bonusNumber);
+        return lotto.getNumbers().contains(bonusNumber.getNumber());
     }
 }

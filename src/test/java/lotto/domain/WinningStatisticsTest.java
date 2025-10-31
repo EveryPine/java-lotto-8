@@ -23,11 +23,9 @@ class WinningStatisticsTest {
         );
         Lotto winningNumbers = new Lotto(List.of(1, 2, 3, 4, 5, 6));
         BonusNumber bonusNumber = new BonusNumber(7);
-        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers, bonusNumber);
 
         // when
-        actual.calculateWinningCounts();
-        actual.calculateReturnRate();
+        WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers, bonusNumber);
 
         // then
         assertThat(actual.getWinningCounts().get(LottoRank.FIRST)).isEqualTo(0);

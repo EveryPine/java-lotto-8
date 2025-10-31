@@ -1,7 +1,11 @@
 package lotto.domain;
 
+import camp.nextstep.edu.missionutils.Randoms;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static lotto.domain.Constants.*;
 
 public class IssuedLottos {
 
@@ -11,6 +15,7 @@ public class IssuedLottos {
     public IssuedLottos(int count) {
         this.count = count;
         this.lottos = new ArrayList<>();
+        initLottos();
     }
 
     public int getCount() {
@@ -21,7 +26,14 @@ public class IssuedLottos {
         return List.copyOf(lottos);
     }
 
-    public void updateLottos(Lotto lotto) {
-        lottos.add(lotto);
+    private void initLottos() {
+        for (int lottoIndex = 0; lottoIndex < count; lottoIndex++) {
+            List<Integer> randomNumbers = Randoms.pickUniqueNumbersInRange(
+                    MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER, LOTTO_NUMBER_COUNT);
+            List<Integer> sortedRandomNumbers = randomNumbers.stream()
+                            .sorted()
+                                    .toList();
+            lottos.add(new Lotto(sortedRandomNumbers));
+        }
     }
 }
