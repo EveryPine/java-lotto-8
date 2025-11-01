@@ -92,7 +92,7 @@ public class WinningStatistics {
         }
 
         for (int number: lotto.getNumbers()) {
-            if (number == winningNumbers.getBonusNumber()) {
+            if (number == winningNumbers.getBonusNumber().getNumber()) {
                 return true;
             }
         }

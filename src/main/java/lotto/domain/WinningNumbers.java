@@ -1,14 +1,11 @@
 package lotto.domain;
 
-import static lotto.domain.Constants.MAX_LOTTO_NUMBER;
-import static lotto.domain.Constants.MIN_LOTTO_NUMBER;
-
 public class WinningNumbers {
 
     private final Lotto winningLotto;
-    private final int bonusNumber;
+    private final BonusNumber bonusNumber;
 
-    public WinningNumbers(Lotto winningLotto, int bonusNumber) {
+    public WinningNumbers(Lotto winningLotto, BonusNumber bonusNumber) {
         validate(winningLotto, bonusNumber);
         this.winningLotto = winningLotto;
         this.bonusNumber = bonusNumber;
@@ -18,17 +15,12 @@ public class WinningNumbers {
         return winningLotto;
     }
 
-    public int getBonusNumber() {
+    public BonusNumber getBonusNumber() {
         return bonusNumber;
     }
 
-    private void validate(Lotto winningLotto, int bonusNumber) {
-        if (bonusNumber < MIN_LOTTO_NUMBER || bonusNumber > MAX_LOTTO_NUMBER) {
-            throw new IllegalArgumentException(String.format("[ERROR] 보너스 번호는 %d부터 %d 사이의 숫자여야 합니다.",
-                    MIN_LOTTO_NUMBER, MAX_LOTTO_NUMBER));
-        }
-
-        if (winningLotto.getNumbers().contains(bonusNumber)) {
+    private void validate(Lotto winningLotto, BonusNumber bonusNumber) {
+        if (winningLotto.getNumbers().contains(bonusNumber.getNumber())) {
             throw new IllegalArgumentException("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.");
         }
     }

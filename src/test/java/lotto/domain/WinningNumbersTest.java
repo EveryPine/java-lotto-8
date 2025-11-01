@@ -13,7 +13,7 @@ class WinningNumbersTest {
     void 보너스_번호가_최솟값_미만이면_예외가_발생한다() {
         // given
         Lotto winningLotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        int bonusNumber = -5;
+        BonusNumber bonusNumber = new BonusNumber(-5);
 
         // when
 
@@ -26,7 +26,7 @@ class WinningNumbersTest {
     void 보너스_번호가_최댓값_초과이면_예외가_발생한다() {
         // given
         Lotto winningLotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        int bonusNumber = 50;
+        BonusNumber bonusNumber = new BonusNumber(50);
 
         // when
 
@@ -39,7 +39,7 @@ class WinningNumbersTest {
     void 보너스_번호가_당첨_번호와_중복되면_예외가_발생한다() {
         // given
         Lotto winningLotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        int bonusNumber = 6;
+        BonusNumber bonusNumber = new BonusNumber(6);
 
         // when
 
@@ -52,7 +52,7 @@ class WinningNumbersTest {
     void 보너스_번호가_포함된_당첨_번호_생성_테스트() {
         // given
         Lotto winningLotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        int bonusNumber = 7;
+        BonusNumber bonusNumber = new BonusNumber(7);
 
         // when
 

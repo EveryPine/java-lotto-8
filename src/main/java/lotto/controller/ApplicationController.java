@@ -1,6 +1,7 @@
 package lotto.controller;
 
 import lotto.domain.Account;
+import lotto.domain.BonusNumber;
 import lotto.domain.Lotto;
 import lotto.domain.WinningNumbers;
 import lotto.dto.CreateWinningStatisticsRequest;
@@ -32,9 +33,7 @@ public class ApplicationController {
         printIssuedLottos(issueLottoResponse);
 
         // TODO 3: 보너스 번호가 포함된 당첨 번호를 입력받는다
-        Lotto winningLotto = inputWinningLotto();
-        int bonusNumber = inputBonusNumber();
-        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, bonusNumber);
+        WinningNumbers winningNumbers = inputWinningNumbers();
 
         // TODO 4: 당첨 통계를 생성하고, 그 결과를 출력한다
         CreateWinningStatisticsResponse createWinningStatisticsResponse =
@@ -71,6 +70,25 @@ public class ApplicationController {
         OutputView.printIssuedLottos(response);
     }
 
+    private WinningNumbers inputWinningNumbers() {
+        Lotto winningLotto = inputWinningLotto();
+        BonusNumber bonusNumber;
+        WinningNumbers winningNumbers;
+
+        OutputView.printBonusNumberGuide();
+        while (true) {
+            try {
+                bonusNumber = inputBonusNumber();
+                winningNumbers = new WinningNumbers(winningLotto, bonusNumber);
+                break;
+            } catch (IllegalArgumentException e) {
+                OutputView.printErrorMessage(e.getMessage());
+            }
+        }
+
+        return winningNumbers;
+    }
+
     private Lotto inputWinningLotto() {
         Lotto winningLotto;
 
@@ -92,19 +110,11 @@ public class ApplicationController {
         return winningLotto;
     }
 
-    private int inputBonusNumber() {
-        int bonusNumber;
+    private BonusNumber inputBonusNumber() {
+        BonusNumber bonusNumber;
 
-        OutputView.printBonusNumberGuide();
-        while (true) {
-            try {
-                String bonusNumberInput = InputView.validInput();
-                bonusNumber = IntegerParser.parseSingleInteger(bonusNumberInput);
-                break;
-            } catch (IllegalArgumentException e) {
-                OutputView.printErrorMessage(e.getMessage());
-            }
-        }
+        String bonusNumberInput = InputView.validInput();
+        bonusNumber = new BonusNumber(IntegerParser.parseSingleInteger(bonusNumberInput));
 
         return bonusNumber;
     }

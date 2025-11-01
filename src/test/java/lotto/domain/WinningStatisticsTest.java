@@ -25,7 +25,8 @@ class WinningStatisticsTest {
                 new Lotto(List.of(1, 3, 5, 14, 22, 45))
         );
         Lotto winningLotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, 7);
+        BonusNumber bonusNumber = new BonusNumber(7);
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, bonusNumber);
 
         // when
         WinningStatistics actual = new WinningStatistics(issuedLottos, winningNumbers);
@@ -47,7 +48,8 @@ class WinningStatisticsTest {
                 new Lotto(List.of(1, 3, 5, 14, 22, 45))
         );
         Lotto winningLotto = new Lotto(List.of(1, 3, 5, 14, 22, 45));
-        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, 7);
+        BonusNumber bonusNumber = new BonusNumber(7);
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, bonusNumber);
         Map<LottoRank, Integer> expected = Map.of(
                 FIRST, 1,
                 SECOND, 0,
@@ -73,7 +75,8 @@ class WinningStatisticsTest {
                 new Lotto(List.of(1, 3, 5, 14, 22, 45))
         );
         Lotto winningLotto = new Lotto(List.of(1, 3, 5, 14, 22, 44));
-        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, 45);
+        BonusNumber bonusNumber = new BonusNumber(45);
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, bonusNumber);
         Map<LottoRank, Integer> expected = Map.of(
                 FIRST, 0,
                 SECOND, 1,
@@ -99,7 +102,8 @@ class WinningStatisticsTest {
                 new Lotto(List.of(1, 3, 5, 14, 22, 45))
         );
         Lotto winningLotto = new Lotto(List.of(1, 3, 5, 14, 22, 44));
-        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, 40);
+        BonusNumber bonusNumber = new BonusNumber(40);
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, bonusNumber);
         Map<LottoRank, Integer> expected = Map.of(
                 FIRST, 0,
                 SECOND, 0,
@@ -125,7 +129,8 @@ class WinningStatisticsTest {
                 new Lotto(List.of(1, 3, 5, 14, 22, 45))
         );
         Lotto winningLotto = new Lotto(List.of(1, 3, 5, 14, 23, 44));
-        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, 40);
+        BonusNumber bonusNumber = new BonusNumber(40);
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, bonusNumber);
         Map<LottoRank, Integer> expected = Map.of(
                 FIRST, 0,
                 SECOND, 0,
@@ -151,7 +156,8 @@ class WinningStatisticsTest {
                 new Lotto(List.of(1, 3, 5, 14, 22, 45))
         );
         Lotto winningLotto = new Lotto(List.of(1, 3, 5, 13, 23, 44));
-        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, 40);
+        BonusNumber bonusNumber = new BonusNumber(40);
+        WinningNumbers winningNumbers = new WinningNumbers(winningLotto, bonusNumber);
         Map<LottoRank, Integer> expected = Map.of(
                 FIRST, 0,
                 SECOND, 0,
@@ -184,7 +190,8 @@ class WinningStatisticsTest {
                 new Lotto( List.of(1, 3, 5, 14, 22, 45))
         );
         Lotto winningLotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
-        WinningNumbers winningNumbers =  new WinningNumbers(winningLotto, 7);
+        BonusNumber bonusNumber = new BonusNumber(7);
+        WinningNumbers winningNumbers =  new WinningNumbers(winningLotto, bonusNumber);
         double expected = 62.5;
 
         // when
