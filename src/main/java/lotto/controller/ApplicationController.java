@@ -7,6 +7,7 @@ import lotto.dto.CreateWinningStatisticsRequest;
 import lotto.dto.CreateWinningStatisticsResponse;
 import lotto.dto.IssueLottoRequest;
 import lotto.dto.IssueLottoResponse;
+import lotto.parser.IntegerParser;
 import lotto.parser.WinningNumbersParser;
 import lotto.service.LottoService;
 import lotto.view.InputView;
@@ -50,10 +51,8 @@ public class ApplicationController {
         while (true) {
             try {
                 String purchaseAmountInput = InputView.validInput();
-                account = new Account(Integer.parseInt(purchaseAmountInput));
+                account = new Account(IntegerParser.parseSingleInteger(purchaseAmountInput));
                 break;
-            } catch (NumberFormatException e) {
-                OutputView.printErrorMessage("[ERROR] 로또 구입 금액은 숫자여야 합니다.");
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
             }
@@ -79,14 +78,12 @@ public class ApplicationController {
         while (true) {
             try {
                 String winningNumbersInput = InputView.validInput();
-                List<String> parsed =  WinningNumbersParser.parse(winningNumbersInput);
+                List<String> parsed = WinningNumbersParser.parse(winningNumbersInput);
                 winningLotto = new Lotto(parsed.stream()
-                        .mapToInt(Integer::parseInt)
+                        .mapToInt(IntegerParser::parseSingleInteger)
                         .boxed()
                         .toList());
                 break;
-            } catch (NumberFormatException e) {
-                OutputView.printErrorMessage("[ERROR] 당첨 번호는 숫자로 이루어져야 합니다.");
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
             }
@@ -102,10 +99,8 @@ public class ApplicationController {
         while (true) {
             try {
                 String bonusNumberInput = InputView.validInput();
-                bonusNumber = Integer.parseInt(bonusNumberInput);
+                bonusNumber = IntegerParser.parseSingleInteger(bonusNumberInput);
                 break;
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("[ERROR] 보너스 번호는 숫자여야 합니다.");
             } catch (IllegalArgumentException e) {
                 OutputView.printErrorMessage(e.getMessage());
             }

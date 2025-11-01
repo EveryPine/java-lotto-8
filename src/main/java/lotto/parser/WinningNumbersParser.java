@@ -7,6 +7,8 @@ public class WinningNumbersParser {
 
     private static final String DELIMITER = ",";
 
+    private WinningNumbersParser() {}
+
     public static List<String> parse(String input) {
         validate(input);
 
